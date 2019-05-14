@@ -57,10 +57,25 @@
     }
     
     // Prevent calling the handler when the gesture begins in an opposite direction.
+///     CGPoint translation = [gestureRecognizer translationInView:gestureRecognizer.view];
+///     BOOL isLeftToRight = [UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight;
+///     CGFloat multiplier = isLeftToRight ? 1 : - 1;
+///     if ((translation.x * multiplier) <= 0) {
+///         return NO;
+///     }
+    
     CGPoint translation = [gestureRecognizer translationInView:gestureRecognizer.view];
-    BOOL isLeftToRight = [UIApplication sharedApplication].userInterfaceLayoutDirection == UIUserInterfaceLayoutDirectionLeftToRight;
-    CGFloat multiplier = isLeftToRight ? 1 : - 1;
-    if ((translation.x * multiplier) <= 0) {
+///     NSLog(@"%@",NSStringFromCGPoint(translation));
+    CGFloat absX = fabs(translation.x);
+    CGFloat absY = fabs(translation.y);
+///    if (MAX(absX, absY) <= 5) {
+///        return NO;
+///    }
+    if (absX > absY) {//左右滑动
+        if (translation.x <= 0) {
+            return NO;//向左滑动
+        }
+    }else{
         return NO;
     }
     
